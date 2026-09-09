@@ -19,7 +19,7 @@
     "dev:api": "pnpm --filter @hubday/api dev",
     "dev:web": "pnpm --filter @hubday/web dev",
     "build": "pnpm --filter @hubday/contracts build && pnpm --filter @hubday/api build && pnpm --filter @hubday/web build",
-    "typecheck": "pnpm --filter @hubday/contracts typecheck && pnpm --filter @hubday/api typecheck && pnpm --filter @hubday/web typecheck",
+    "typecheck": "pnpm --filter @hubday/contracts build && pnpm --filter @hubday/api typecheck && pnpm --filter @hubday/web typecheck",
     "test": "pnpm --filter @hubday/api test",
     "test:e2e": "pnpm --filter @hubday/web test:e2e"
   },
