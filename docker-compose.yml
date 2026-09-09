@@ -1,0 +1,76 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: hubday_db
+    environment:
+      POSTGRES_USER: hubday
+      POSTGRES_PASSWORD: hubday
+      POSTGRES_DB: hubday
+    ports:
+      - "5432:5432"
+    volumes:
+      - hubday_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hubday -d hubday"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  db_test:
+    image: postgres:16-alpine
+    container_name: hubday_db_test
+    environment:
+      POSTGRES_USER: hubday
+      POSTGRES_PASSWORD: hubday
+      POSTGRES_DB: hubday_test
+    ports:
+      - "5433:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hubday -d hubday_test"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: hubday_api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - API_HOST=0.0.0.0
+      - API_PORT=3000
+      - DATABASE_URL=postgres://hubday:hubday@db:5432/hubday
+      - AUTH_TOKEN_SECRET=dev-only-insecure-secret-change-me
+      - WEB_ORIGIN=http://localhost:5173
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        - VITE_API_URL=http://localhost:3000
+    container_name: hubday_web
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  hubday_pgdata:
