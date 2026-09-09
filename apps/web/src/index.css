@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+body { margin: 0; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+:focus-visible { outline: 2px solid #68378d; outline-offset: 2px; }
+.app-screen { height: 100dvh; max-width: 960px; margin: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.app-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex: none; }
+.screen-panel { flex: 1; min-height: 0; }
+.screen-panel[hidden] { display: none; }
+.flow-panel { height: 100%; min-height: 0; min-width: 0; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.flow-body { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 12px; }
+.flow-caption { font-size: 12px; color: #655970; }
+.flow-actions { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex: none; }
+.booking-options { display: grid; gap: 16px; }
+.availability-calendar { display: flex; flex-direction: column; gap: 6px; padding: 10px; flex: 1; min-height: 0; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); grid-template-rows: 20px; grid-auto-rows: minmax(24px, 1fr); gap: 3px; text-align: center; flex: 1; min-height: 0; }
+.calendar-grid > span { font-size: 12px; }
+.calendar-status, .calendar-legend { flex: none; }
+.slot-stage, .slot-picker { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.slot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.pager { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; }
+.appointment-card { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px; overflow-wrap: anywhere; }
+.login-screen { min-height: 100dvh; display: grid; place-items: center; padding: 12px; }
+.login-card { width: min(100%, 420px); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.login-form { display: flex; flex-direction: column; gap: 12px; }
+@media (min-width: 700px) {
+  .booking-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .slot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-height: 650px) {
+  .app-screen { padding: 6px; gap: 4px; }
+  .flow-panel { padding: 8px; gap: 4px; }
+  .flow-body { gap: 6px; }
+  .booking-options { gap: 8px; }
+  .availability-calendar { padding: 6px; gap: 3px; }
+  .calendar-grid { grid-auto-rows: minmax(20px, 1fr); gap: 2px; }
+  .calendar-grid button { padding: 0; border-radius: 8px; }
+  .calendar-grid button span { height: 5px; }
+  .appointment-card { gap: 6px; padding: 8px; }
+  .slot-stage, .slot-picker { gap: 6px; }
+  .login-card { padding: 16px; gap: 8px; }
+  .login-form { gap: 8px; }
+}
+@media (max-height: 450px) and (min-width: 600px) {
+  .account-info { display: none; }
+  .app-screen > .MuiTabs-root, .flow-panel > .MuiTabs-root { min-height: 32px; }
+  .app-screen .MuiTab-root { min-height: 32px; padding: 4px 12px; }
+  .flow-panel > h2 { font-size: 14px; line-height: 18px; }
+  .flow-caption { line-height: 16px; }
+  .availability-calendar { display: grid; grid-template-columns: 170px 1fr; grid-template-rows: auto 1fr auto; column-gap: 10px; }
+  .calendar-grid { grid-column: 2; grid-row: 1 / 4; }
+  .calendar-legend, .calendar-status { grid-column: 1; }
+  .availability-calendar > div:first-child { flex-wrap: wrap; justify-content: center; }
+  .availability-calendar > div:first-child > span { order: -1; width: 100%; text-align: center; }
+  .flow-actions button { min-height: 32px; }
+  .appointment-card { display: grid; grid-template-columns: 1fr 1fr; }
+  .login-card { width: min(100%, 640px); }
+  .login-form { display: grid; grid-template-columns: 1fr 1fr; }
+  .login-form > button { grid-column: 1 / -1; }
+}
+
+/* Calendar-first booking and full-card time selection. */
+.calendar-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; flex: none; }
+.calendar-filters .MuiFormLabel-root { font-size: 12px; }
+.slot-stage, .slot-picker { flex: 1; min-width: 0; }
+.slot-stage > .MuiFormControl-root { flex: none; }
+.slot-grid { flex: 1; min-height: 0; grid-auto-rows: minmax(40px, 1fr); }
+.slot-picker .pager { flex: none; }
+.appointments-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex: none; }
+.date-filter { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.date-filter .MuiTextField-root { width: 170px; min-width: 0; }
+.date-filter input { min-width: 0; font-size: 13px; padding: 9px; }
+@media (max-width: 450px) {
+  .calendar-filters { gap: 6px; }
+  .calendar-filters .MuiNativeSelect-select { font-size: 12px; padding-left: 8px; }
+  .appointments-header { gap: 4px; flex-wrap: wrap; }
+  .appointments-header h2 { font-size: 15px; }
+  .date-filter { margin-left: auto; }
+  .date-filter .MuiTextField-root { width: 135px; }
+  .date-filter button { min-width: 0; padding: 4px; }
+}
+@media (max-height: 450px) and (min-width: 600px) {
+  .calendar-filters .MuiFormControl-root { flex-direction: row; align-items: center; gap: 8px; }
+  .calendar-filters .MuiFormLabel-root { flex: none; }
+  .calendar-filters .MuiInputBase-root { min-width: 0; }
+  .slot-stage > .MuiFormControl-root { flex-direction: row; align-items: center; }
+  .slot-stage > .MuiFormControl-root > .MuiInputBase-root { max-width: 360px; }
+}
+
+/* Branding Kit: purple surfaces, Helvetica, soft cards and geometric mark. */
+::selection { background: #ddc6f4; color: #231c2b; }
+body { background: linear-gradient(160deg, #e5d7f4, #f3eef9); }
+.brand-lockup { display: flex; align-items: center; gap: 10px; color: #231c2b; font-size: 22px; font-weight: 700; }
+.brand-mark { width: 28px; height: 28px; border-radius: 8px; background: #68378d; flex: none; }
+.brand-dot { color: #68378d; }
+.brand-sidebar { display: none; }
+.app-header { padding: 10px 14px; background: #fff; border: 1px solid #e7e1ed; border-radius: 16px; }
+.app-screen > .MuiTabs-root { background: #fff; border-radius: 12px; padding: 4px; flex-shrink: 0; }
+.flow-panel { background: #fff; }
+.availability-calendar { background: #fcfafd; }
+.calendar-grid > button { font-weight: 700; }
+.login-card { border-radius: 20px !important; box-shadow: 0 20px 50px rgba(0,0,0,.08) !important; }
+.login-card .brand-lockup { margin-bottom: 24px; }
+.login-card h1 { font-size: 24px; line-height: 1.25; margin-bottom: 8px; }
+@media (min-width: 1000px) and (min-height: 651px) {
+  .app-screen { max-width: 1200px; display: grid; grid-template-columns: 220px minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); gap: 16px; padding: 24px; }
+  .brand-sidebar { grid-column: 1; grid-row: 1 / 4; display: flex; flex-direction: column; align-items: flex-start; padding: 28px 20px; background: #fcfafd; border: 1px solid #e7e1ed; border-radius: 24px; }
+  .brand-sidebar p { margin-top: 16px; color: #655970; font-size: 14px; }
+  .sidebar-caption { margin-top: auto; color: #655970; font-size: 11px; letter-spacing: .08em; }
+  .app-header, .app-screen > .MuiTabs-root, .screen-panel { grid-column: 2; min-width: 0; }
+  .screen-panel { grid-row: 3; }
+  .flow-panel { padding: 22px; border-radius: 20px; }
+}
+@media (max-height: 650px) {
+  .app-header { padding: 4px 8px; }
+  .app-screen > .MuiTabs-root { padding: 0; }
+  .login-card .brand-lockup { margin-bottom: 8px; font-size: 18px; }
+  .login-card h1 { font-size: 20px; margin-bottom: 4px; }
+}
